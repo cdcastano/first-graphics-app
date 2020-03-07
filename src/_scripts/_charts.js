@@ -59,8 +59,22 @@ var createChart = (el, fieldname) => {
     .attr("class", "bar")
     .attr("x", d => xScale(d.year))
     .attr("y", d => yScale(d[fieldname]))
-    .attr("width", xScale.bandwidth())
-    .attr("height", d => chartHeight - yScale(d[fieldname]));
+    .attr("width", d => xScale.bandwidth())
+    .attr("height", d => chartHeight - yScale(d[fieldname]))
+    .on("mouseenter", function(d) {
+      d3.select(this).classed("highlight", true);
+
+      // centers the text above each bar
+      var x = xScale(d.year) + xScale.bandwidth() / 2;
+      // the - 5 bumps up the text a bit so it's not directly over the bar
+      var y = yScale(d[fieldname]) - 5;
+
+      tooltip.text(d[fieldname]).attr("transform", `translate(${x}, ${y})`);
+    })
+    .on("mouseleave", function(d) {
+      d3.select(this).classed("highlight", false);
+      tooltip.text("");
+    });
 };
 
 createChart("#county-homicides", "homicides_total");

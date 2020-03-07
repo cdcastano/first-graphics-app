@@ -11,5 +11,17 @@ By Chris Castano
 {% endblock %}
 
 {% block pubdate %}
-March 7, 2020
+<time datetime="2020-03-07" pubdate>
+  March 7, 2020
+</time>
+{% endblock %}
+
+{% block content %}
+{% for obj in site.data.harvard_park_homicides %}
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ obj.first_name }} {{ obj.last_name }}</h5>
+      </div>
+    </div>
+{% endfor %}
 {% endblock %}
